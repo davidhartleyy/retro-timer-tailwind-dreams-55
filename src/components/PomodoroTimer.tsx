@@ -95,14 +95,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
   };
 
   return (
-    <div className="min-h-screen text-black flex" style={{ backgroundColor: '#FAFAFA' }}>
+    <div className="min-h-screen bg-gradient-bg text-white flex">
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           {/* Progress indicator and session info */}
           <div className="mb-8 flex flex-col items-center">
             <div className="w-8 h-1 bg-orange-500 rounded-full mb-4"></div>
             <div className="text-orange-500 text-sm font-medium mb-2">{Math.round(progressPercentage)}%</div>
-            <div style={{ color: '#737373' }} className="text-xs mb-4">
+            <div className="text-white/70 text-xs mb-4">
               {new Date().toLocaleDateString('en-US', { 
                 month: 'short', 
                 day: '2-digit',
@@ -115,7 +115,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
                 <div
                   key={num}
                   className={`w-3 h-0.5 rounded-full transition-colors ${
-                    num <= session ? 'bg-orange-500' : 'bg-gray-300'
+                    num <= session ? 'bg-orange-500' : 'bg-white/30'
                   }`}
                 />
               ))}
@@ -129,10 +129,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
               variant="ghost"
               className={`px-6 py-2 rounded-full transition-all duration-200 ${
                 mode === 'work'
-                  ? 'bg-white border border-gray-200 shadow-lg text-black' 
-                  : 'hover:bg-gray-100'
+                  ? 'bg-white/20 border border-white/30 backdrop-blur-sm text-white shadow-lg' 
+                  : 'hover:bg-white/10 text-white/70 hover:text-white'
               }`}
-              style={mode !== 'work' ? { color: '#737373' } : {}}
             >
               Work (25min)
             </Button>
@@ -141,10 +140,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
               variant="ghost"
               className={`px-6 py-2 rounded-full transition-all duration-200 ${
                 mode === 'break'
-                  ? 'bg-white border border-gray-200 shadow-lg text-black' 
-                  : 'hover:bg-gray-100'
+                  ? 'bg-white/20 border border-white/30 backdrop-blur-sm text-white shadow-lg' 
+                  : 'hover:bg-white/10 text-white/70 hover:text-white'
               }`}
-              style={mode !== 'break' ? { color: '#737373' } : {}}
             >
               Break (5min)
             </Button>
@@ -153,10 +151,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
               variant="ghost"
               className={`px-6 py-2 rounded-full transition-all duration-200 ${
                 mode === 'longBreak'
-                  ? 'bg-white border border-gray-200 shadow-lg text-black' 
-                  : 'hover:bg-gray-100'
+                  ? 'bg-white/20 border border-white/30 backdrop-blur-sm text-white shadow-lg' 
+                  : 'hover:bg-white/10 text-white/70 hover:text-white'
               }`}
-              style={mode !== 'longBreak' ? { color: '#737373' } : {}}
             >
               Long Break (10min)
             </Button>
@@ -164,13 +161,13 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
 
           {/* Timer Display */}
           <div className="flex items-center justify-center mb-8">
-            <div className="bg-white border border-gray-200 shadow-lg rounded-3xl p-8 mx-2 min-w-[120px]">
-              <div className="text-8xl font-bold tracking-wider" style={{ color: '#000000' }}>
+            <div className="bg-white/10 border border-white/20 backdrop-blur-sm shadow-2xl rounded-3xl p-8 mx-2 min-w-[120px]">
+              <div className="text-8xl font-bold tracking-wider text-white">
                 {mins.toString().padStart(2, '0')}
               </div>
             </div>
-            <div className="bg-white border border-gray-200 shadow-lg rounded-3xl p-8 mx-2 min-w-[120px]">
-              <div className="text-8xl font-bold tracking-wider" style={{ color: '#000000' }}>
+            <div className="bg-white/10 border border-white/20 backdrop-blur-sm shadow-2xl rounded-3xl p-8 mx-2 min-w-[120px]">
+              <div className="text-8xl font-bold tracking-wider text-white">
                 {secs.toString().padStart(2, '0')}
               </div>
             </div>
@@ -178,10 +175,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
 
           {/* Session Type Indicator */}
           <div className="mb-8">
-            <div className="text-lg mb-2" style={{ color: '#737373' }}>
+            <div className="text-lg mb-2 text-white/90">
               {getModeLabel()}
             </div>
-            <div className="text-sm" style={{ color: '#737373' }}>
+            <div className="text-sm text-white/70">
               Session {session}
             </div>
           </div>
@@ -190,7 +187,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
           <div className="flex items-center justify-center gap-4">
             <Button
               onClick={toggleTimer}
-              className="bg-white border border-gray-200 hover:bg-gray-50 shadow-lg text-black rounded-full px-8 py-3 transition-all duration-200"
+              className="bg-white/20 border border-white/30 hover:bg-white/30 backdrop-blur-sm shadow-lg text-white rounded-full px-8 py-3 transition-all duration-200"
             >
               {isActive ? (
                 <Pause className="w-5 h-5 mr-2" />
@@ -203,8 +200,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
             <Button
               onClick={resetTimer}
               variant="ghost"
-              className="hover:bg-gray-100 rounded-full px-6 py-3 transition-all duration-200"
-              style={{ color: '#737373' }}
+              className="hover:bg-white/10 text-white/70 hover:text-white rounded-full px-6 py-3 transition-all duration-200"
             >
               <RotateCcw className="w-5 h-5 mr-2" />
               Reset
