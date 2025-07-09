@@ -167,12 +167,12 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
           {/* Timer Display */}
           <div className="flex items-center justify-center mb-8">
             <div className="bg-white/10 border border-white/20 backdrop-blur-sm shadow-2xl rounded-3xl p-8 mx-2 min-w-[120px]">
-              <div className="text-8xl font-bold tracking-wider text-white">
+              <div className="text-8xl font-black text-white" style={{ letterSpacing: '0.0375em' }}>
                 {mins.toString().padStart(2, '0')}
               </div>
             </div>
             <div className="bg-white/10 border border-white/20 backdrop-blur-sm shadow-2xl rounded-3xl p-8 mx-2 min-w-[120px]">
-              <div className="text-8xl font-bold tracking-wider text-white">
+              <div className="text-8xl font-black text-white" style={{ letterSpacing: '0.0375em' }}>
                 {secs.toString().padStart(2, '0')}
               </div>
             </div>
