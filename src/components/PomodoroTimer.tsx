@@ -105,8 +105,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
         <div className="text-center">
           {/* Progress indicator and session info */}
           <div className="mb-8 flex flex-col items-center">
-            <div className="w-8 h-1 bg-orange-500 rounded-full mb-4"></div>
-            <div className="text-orange-500 text-sm font-medium mb-2">{Math.round(progressPercentage)}%</div>
+            <div className="w-8 h-1 bg-white rounded-full mb-4"></div>
+            <div className="text-white text-sm font-medium mb-2">{Math.round(progressPercentage)}%</div>
             <div className="text-white/70 text-xs mb-4">
               {new Date().toLocaleDateString('en-US', { 
                 month: 'short', 
@@ -120,7 +120,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
                 <div
                   key={num}
                   className={`w-3 h-0.5 rounded-full transition-colors ${
-                    num <= session ? 'bg-orange-500' : 'bg-white/30'
+                    num <= session ? 'bg-white' : 'bg-white/30'
                   }`}
                 />
               ))}
@@ -167,12 +167,12 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
           {/* Timer Display */}
           <div className="flex items-center justify-center mb-8">
             <div className="bg-white/10 border border-white/20 backdrop-blur-sm shadow-2xl rounded-3xl p-8 mx-2 min-w-[120px]">
-              <div className="text-8xl font-black text-white" style={{ letterSpacing: '0.0375em' }}>
+              <div className="text-8xl text-white" style={{ fontWeight: '900', letterSpacing: '0.01875em' }}>
                 {mins.toString().padStart(2, '0')}
               </div>
             </div>
             <div className="bg-white/10 border border-white/20 backdrop-blur-sm shadow-2xl rounded-3xl p-8 mx-2 min-w-[120px]">
-              <div className="text-8xl font-black text-white" style={{ letterSpacing: '0.0375em' }}>
+              <div className="text-8xl text-white" style={{ fontWeight: '900', letterSpacing: '0.01875em' }}>
                 {secs.toString().padStart(2, '0')}
               </div>
             </div>
