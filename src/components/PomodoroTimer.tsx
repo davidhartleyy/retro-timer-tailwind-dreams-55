@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw, Plus, Check, X } from 'lucide-react';
+import { Play, Pause, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
-interface Task {
-  id: string;
-  text: string;
-  completed: boolean;
-}
 
 interface PomodoroTimerProps {}
 
@@ -16,10 +9,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState<'work' | 'break' | 'longBreak'>('work');
   const [session, setSession] = useState(1);
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [currentTask, setCurrentTask] = useState<Task | null>(null);
-  const [newTaskText, setNewTaskText] = useState('');
-  const [showTaskInput, setShowTaskInput] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const workTime = 25 * 60; // 25 minutes
@@ -103,44 +92,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
     if (mode === 'work') return 'Focus Time';
     if (mode === 'break') return 'Break Time';
     return 'Long Break';
-  };
-
-  const addTask = () => {
-    if (newTaskText.trim()) {
-      const newTask: Task = {
-        id: Date.now().toString(),
-        text: newTaskText.trim(),
-        completed: false
-      };
-      setTasks([...tasks, newTask]);
-      setNewTaskText('');
-      setShowTaskInput(false);
-      if (!currentTask) {
-        setCurrentTask(newTask);
-      }
-    }
-  };
-
-  const completeTask = (taskId: string) => {
-    setTasks(tasks.map(task => 
-      task.id === taskId ? { ...task, completed: true } : task
-    ));
-    if (currentTask?.id === taskId) {
-      const nextTask = tasks.find(task => !task.completed && task.id !== taskId);
-      setCurrentTask(nextTask || null);
-    }
-  };
-
-  const selectTask = (task: Task) => {
-    setCurrentTask(task);
-  };
-
-  const deleteTask = (taskId: string) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
-    if (currentTask?.id === taskId) {
-      const nextTask = tasks.find(task => !task.completed && task.id !== taskId);
-      setCurrentTask(nextTask || null);
-    }
   };
 
   return (
@@ -236,103 +187,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
               Session {session}
             </div>
           </div>
-
-          {/* Current Task Display */}
-          {currentTask && (
-            <div className="mb-6">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-sm rounded-2xl p-4 max-w-md mx-auto">
-                <div className="text-sm text-white/70 mb-1">Working on:</div>
-                <div className="text-white font-medium">{currentTask.text}</div>
-                <Button
-                  onClick={() => completeTask(currentTask.id)}
-                  size="sm"
-                  className="mt-2 bg-white/20 border border-white/30 hover:bg-white/30 backdrop-blur-sm text-white rounded-full px-4 py-1 text-xs"
-                >
-                  <Check className="w-3 h-3 mr-1" />
-                  Mark Complete
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {/* Task Input */}
-          <div className="mb-8">
-            {!showTaskInput ? (
-              <Button
-                onClick={() => setShowTaskInput(true)}
-                variant="ghost"
-                className="bg-white/10 border border-white/20 backdrop-blur-sm hover:bg-white/20 text-white rounded-2xl px-6 py-3 transition-all duration-200"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Task
-              </Button>
-            ) : (
-              <div className="bg-white/10 border border-white/20 backdrop-blur-sm rounded-2xl p-4 max-w-md mx-auto">
-                <div className="flex gap-2">
-                  <Input
-                    value={newTaskText}
-                    onChange={(e) => setNewTaskText(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && addTask()}
-                    placeholder="What are you working on?"
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-white/40"
-                  />
-                  <Button
-                    onClick={addTask}
-                    size="sm"
-                    className="bg-white/20 hover:bg-white/30 text-white px-3"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setShowTaskInput(false);
-                      setNewTaskText('');
-                    }}
-                    size="sm"
-                    variant="ghost"
-                    className="hover:bg-white/10 text-white/70 px-3"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Task List */}
-          {tasks.length > 0 && (
-            <div className="mb-8 max-w-md mx-auto">
-              <div className="bg-white/10 border border-white/20 backdrop-blur-sm rounded-2xl p-4">
-                <div className="text-sm text-white/70 mb-3">Tasks:</div>
-                <div className="space-y-2">
-                  {tasks.filter(task => !task.completed).map((task) => (
-                    <div
-                      key={task.id}
-                      className={`flex items-center justify-between p-2 rounded-lg transition-all cursor-pointer ${
-                        currentTask?.id === task.id 
-                          ? 'bg-white/20 border border-white/30' 
-                          : 'bg-white/5 hover:bg-white/10'
-                      }`}
-                      onClick={() => selectTask(task)}
-                    >
-                      <span className="text-white text-sm">{task.text}</span>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteTask(task.id);
-                        }}
-                        size="sm"
-                        variant="ghost"
-                        className="hover:bg-white/20 text-white/70 hover:text-white p-1 h-6 w-6"
-                      >
-                        <X className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-4">
