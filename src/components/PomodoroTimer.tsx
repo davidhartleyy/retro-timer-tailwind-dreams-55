@@ -95,7 +95,12 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-bg text-white flex">
+    <div className="min-h-screen text-white flex" style={{ 
+      backgroundImage: "url('/lovable-uploads/aca94daf-3058-4686-afa8-603b9684a44f.png')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}>
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           {/* Progress indicator and session info */}
